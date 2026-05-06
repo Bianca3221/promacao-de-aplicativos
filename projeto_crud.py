@@ -11,7 +11,7 @@ def listar_produtos(estoque):
         indice = estoque.index(nome)
         print(f"posição: {indice}, Nome: {nome}")
         
-
+# Substituir o produto pelo o outro que deseja 
 def atualizar_produto(indice,novo_nome,estoque):
     estoque[indice] = novo_nome
 
@@ -29,10 +29,10 @@ def exibir_menu(acao):
         print("4- Remover produto da lista ")
         print("5- Sair")
 
-        acao = input("Digite a ação desejada: ")
+        acao = int(input("Digite a ação desejada: "))
 
         if acao == 1 :
-            produto = int(input("Digite o nome do produto: "))
+            produto = input("Digite o nome do produto: ")
             adicionar_lista(produto,estoque)
 
         elif acao == 2 :
