@@ -18,7 +18,7 @@ def revisar_habitos():
         
 def habitos_atualizados():
     revisar_habitos()
-    indice = input("Digite o ID do habito que deseja alterar: ")
+    indice = int(input("Digite o ID do habito que deseja alterar: "))
     novo_habito = input("Digite um novo habito: ")
 
     with open('bons.habito', 'r') as f :
@@ -29,5 +29,15 @@ def habitos_atualizados():
     with open('bons.habitos', 'w')as f :
         f.writelines(linhas)
     print("Hábito atualizado!")
+
+def remover():
+    revisar_habitos()
+    indice = int(input("Digite o ID do hábito que deseja remover: "))
+
+    with open('bons.habitos', 'r') as f:
+        linhas = f.readlines()
+
+    del linhas[indice]
+    with open        
     
 

@@ -40,7 +40,6 @@ def remover():
        linhas = f.readlines()
     
     del linhas[indice]
-
     with open('planejamento.viagem', 'w') as f : 
         f.writelines(linhas)
 
