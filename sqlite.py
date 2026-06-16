@@ -50,21 +50,47 @@ listar_alunos()
 
 def alterar_aluno ():
     
-    conexão = sqlite3.connect("escola_demonstracao.db")
-    cursor = conexão.cursor()
+    conexao = sqlite3.connect("escola_demonstracao.db")
+    cursor = conexao.cursor()
 
     id_acesso = int(input("Digite o ID: "))
-    novo_nome = input("Digite o nome da alteração:")
-    novo_cpf = input("Digite o novo CPF: ")
 
+    cursor.execute (f"SELECT * FROM nome = WHERE id = {id_acesso}")
 
-    cursor.execute (f"UPDATE alunos SET nome = '{novo_nome}', cpf = '{novo_cpf}' WHERE id = {id_acesso};")
+    aluno = cursor.fetchone()
 
-    conexão.commit()
+    if not aluno:
+        print("Aluno não encontrado!")
 
-    print("Dados atualizados com sucesso!")
-    conexão.close()
-
-
-def exclui_aluno ():
+        conexao.close()
+        return
     
+    else:
+        novo_nome = input("Digite o nome: ")
+        novo_telefone = int(input("Digite o telefone : "))
+        nova_idade = int(input("Digite a sua idade: "))
+        nova_turma = input("Digite sua nova truma")
+        novo_cpf = input("Digite o CPF: ")
+        comando = (f''' UPDATE alunos SET nome=  '{novo_nome}',telefone= '{novo_telefone}',idade= {nova_idade}, turma= '{nova_turma}',cpf= {novo_cpf}''')
+        cursor.execute(comando)
+        conexao.commit()
+        conexao.close()
+
+def excluir_aluno ():
+    conexao = sqlite3.connect("escola_demonstracao.db")
+    cursor = conexao.cursor() 
+
+    listar_alunos()
+
+    id_remover = int(input("Digite o ID: "))
+
+    cursor.execute(f''' DELETE FROM alunos WHERE id = {id_remover}''')
+
+    conexao.commit()
+
+    print("Aluno removido com sucesso!") 
+    conexao.close()
+
+
+
+
