@@ -7,15 +7,13 @@ def cadastrar_aluno() :
 
     # 2 passo CRIAÇÃO DA TABELA 
     cursor.execute('''
-                    CREATE TABLE IF NOT EXISTS alunos (
+                    CREATE TABLE if NOT EXISTS alunos (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         nome TEXT NOT NULL,
                         telefone TEXT,
                         turma TEXT,
                         idade INTEGER,
-                        cpf TEXT UNIQUE NOT NULL
-                )
-                ''')
+                        cpf TEXT UNIQUE NOT NULL )''')
 
     # 3. INFORMAÇÕES DO ALUNO: Criando as variáveis com input 
     nome_aluno = input("Nome do aluno: ")
@@ -46,8 +44,6 @@ def listar_alunos():
         
     conexao.close()
 
-listar_alunos()
-
 def alterar_aluno ():
     
     conexao = sqlite3.connect("escola_demonstracao.db")
@@ -55,7 +51,7 @@ def alterar_aluno ():
 
     id_acesso = int(input("Digite o ID: "))
 
-    cursor.execute (f"SELECT * FROM nome = WHERE id = {id_acesso}")
+    cursor.execute (f"SELECT * FROM alunos WHERE id = {id_acesso}")
 
     aluno = cursor.fetchone()
 
@@ -71,9 +67,19 @@ def alterar_aluno ():
         nova_idade = int(input("Digite a sua idade: "))
         nova_turma = input("Digite sua nova truma")
         novo_cpf = input("Digite o CPF: ")
-        comando = (f''' UPDATE alunos SET nome=  '{novo_nome}',telefone= '{novo_telefone}',idade= {nova_idade}, turma= '{nova_turma}',cpf= {novo_cpf}''')
+
+        comando = (f'''
+        UPDATE alunos SET nome=  '{novo_nome}',
+        telefone= '{novo_telefone}',
+        idade= {nova_idade},
+        turma= '{nova_turma}',
+        cpf= {novo_cpf}
+        WHERE id = {id_acesso}
+        ''')
+        
         cursor.execute(comando)
         conexao.commit()
+        print("Aluno alterado!")
         conexao.close()
 
 def excluir_aluno ():
@@ -91,6 +97,23 @@ def excluir_aluno ():
     print("Aluno removido com sucesso!") 
     conexao.close()
 
+def menu():
+     while True:
+        print(" SISTEMA DE PROFESSORES! ")
+        print("1. Cadastrar Professores!")
+        print("2. Listar Professores!") 
+        print("3. Atualizar Professores!")  
+        print("4. Excluir Professores!") 
+        print("5. Sair") 
 
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == '1': cadastrar()  
+        elif opcao == '2': listar_aluno()
+        elif opcao == '3': alterar_aluno()  
+        elif opcao == '4': excluir_aluno()
+        elif opcao == '5': break 
+        else: print("Opção inválida!")
+        
 
 

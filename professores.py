@@ -5,15 +5,15 @@ def criar_tabela():
     cursor = conexao.cursor()
 
     cursor.execute('''
-                    CREATE TABLE if NOT EXIST professores(
-                        id INTEGER PRIMARY KEY AUTOINCREMENT
-                        nome = TEXT NOT NULL,
-                        telefone = TEXT,
-                        materia = TEXT,
-                        idade = INTEGER,
-                        cpf = TEXT UNIQUE,
-                        salario = TEXT,
-                        nome_escola = TEXT ''')
+                CREATE TABLE if NOT EXISTS professores(
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nome TEXT NOT NULL,
+                    telefone TEXT,
+                    materia  TEXT,
+                    idade  INTEGER,
+                    cpf  TEXT UNIQUE,
+                    salario  REAL,
+                    nome_escola  TEXT ) ''')
     
     #informações para por na tabela
     nome_professor = input("Digite o nome do professor: ")
@@ -24,18 +24,87 @@ def criar_tabela():
     salario_professor = input("Digite o salário do professor: ")
     escola_professor = input("Digite o nome da escola: ")
 
-    comando_inserir = f'''
-        INSERT INTO alunos (nome,telefone,turma,idade,cpf)
-        VALUES ('{nome_professor}','{telefone_professor}','{materia_professor}',{idade_professor},'{cpf_professor}','{salario_professor}','{escola_professor}')'''
+    comando_inserir = (f'''
+        INSERT INTO professores (nome,telefone,materia,idade,cpf,salario,nome_escola)
+        VALUES ('{nome_professor}','{telefone_professor}','{materia_professor}',{idade_professor},'{cpf_professor}',
+                {salario_professor},'{escola_professor}')''')
 
-def listar_alunos():
+    cursor.execute(comando_inserir)
+    conexao.commit()
+    conexao.close()
+    
+def listar_professores():
     conexao = sqlite3.connect("escola_demonstracao.db")
     cursor = conexao.cursor ()
     cursor.execute('''SELECT * FROM professores''')
-    todos_professores = cursor.fetchall
+    todos_professores = cursor.fetchall ()
     if not todos_professores:
         print("Nenhum professor cadastrado!")
     else:
         for professor in todos_professores:
-            print(f"id = {professor[0]}, Nome = {professor[1]}, Telefone = {professor[2]}, Materia = {professor[3]}, Idade = {professor[4]},")
-            
+            print(f"id = {professor[0]}, Nome = {professor[1]}, Telefone = {professor[2]}, Materia = {professor[3]}, Idade = {professor[4]},CPF = {professor[5]}, Salario = {professor[6]} Escola = {professor[7]}")
+     
+    conexao.close()
+
+def alterar_professores():
+    conexao = sqlite3.connect("escola_demonstracao.db")
+    cursor = conexao.cursor ()
+    id_acesso = int(input("Digite o ID: "))
+
+    cursor.execute (f"SELECT * FROM professores WHERE id = {id_acesso}")
+
+    professores = cursor.fetchone()
+
+    if not professores:
+        print("Professor não encontrado!")
+        conexao.close()
+        return
+
+    else:
+        novo_nome = input("Digite o nome: ")
+        novo_telefone = input("Digite o telefone : ")
+        
+
+        comando = (f''' UPDATE professores SET nome=  '{novo_nome}',telefone= '{novo_telefone}
+                    WHERE id = {id_acesso}''')
+        conexao.commit()
+        print("Dados alterados com sucesso!")
+        conexao.close()
+
+
+def excluir_professores ():
+    conexao = sqlite3.connect("escola_demonstracao.db")
+    cursor = conexao.cursor() 
+
+    listar_professores()
+
+    id_remover = int(input("Digite o ID: "))
+
+    cursor.execute(f''' DELETE FROM professores WHERE id = {id_remover}''')
+
+    conexao.commit()
+
+    print("Professor removido com sucesso!") 
+    conexao.close()
+
+
+def menu():
+    while True:
+        print(" SISTEMA DE PROFESSORES! ")
+        print("1. Cadastrar Professores!")
+        print("2. Listar Professores!") 
+        print("3. Atualizar Professores!")  
+        print("4. Excluir Professores!") 
+        print("5. Sair") 
+
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == '1': criar_tabela()  
+        elif opcao == '2': listar_professores()
+        elif opcao == '3': alterar_professores()  
+        elif opcao == '4': excluir_professores()
+        elif opcao == '5': break 
+        else: print("Opção inválida!")
+        
+
+menu()
