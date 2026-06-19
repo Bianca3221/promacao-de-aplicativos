@@ -13,6 +13,7 @@ def criar_tabela():
                     idade  INTEGER,
                     cpf  TEXT UNIQUE,
                     salario  REAL,
+                    endereco TEXT,
                     nome_escola  TEXT ) ''')
     
     #informações para por na tabela
@@ -22,12 +23,13 @@ def criar_tabela():
     idade_professor = int(input("Digite a idade do professor: "))
     cpf_professor = input("Digite o CPF do professor: ")
     salario_professor = input("Digite o salário do professor: ")
+    endereco_professor = input("Digite o endreço do professor: ")
     escola_professor = input("Digite o nome da escola: ")
 
     comando_inserir = (f'''
-        INSERT INTO professores (nome,telefone,materia,idade,cpf,salario,nome_escola)
+        INSERT INTO professores (nome,telefone,materia,idade,cpf,salario,endereco,nome_escola)
         VALUES ('{nome_professor}','{telefone_professor}','{materia_professor}',{idade_professor},'{cpf_professor}',
-                {salario_professor},'{escola_professor}')''')
+                {salario_professor},'{endereco_professor}','{escola_professor}')''')
 
     cursor.execute(comando_inserir)
     conexao.commit()
@@ -42,7 +44,7 @@ def listar_professores():
         print("Nenhum professor cadastrado!")
     else:
         for professor in todos_professores:
-            print(f"id = {professor[0]}, Nome = {professor[1]}, Telefone = {professor[2]}, Materia = {professor[3]}, Idade = {professor[4]},CPF = {professor[5]}, Salario = {professor[6]} Escola = {professor[7]}")
+            print(f"id = {professor[0]}, Nome = {professor[1]}, Telefone = {professor[2]}, Materia = {professor[3]}, Idade = {professor[4]},CPF = {professor[5]}, Salario = {professor[6]}, Endereço = {professor[7]},Escola = {professor[8]}")
      
     conexao.close()
 
@@ -63,9 +65,9 @@ def alterar_professores():
     else:
         novo_nome = input("Digite o nome: ")
         novo_telefone = input("Digite o telefone : ")
-        
+        novo_endereco = input("Digite o novo endereço: ")
 
-        comando = (f''' UPDATE professores SET nome=  '{novo_nome}',telefone= '{novo_telefone}
+        comando = (f''' UPDATE professores SET nome=  '{novo_nome}',telefone= '{novo_telefone}, Endereço = '{novo_endereco}'
                     WHERE id = {id_acesso}''')
         conexao.commit()
         print("Dados alterados com sucesso!")
