@@ -15,7 +15,7 @@ def cadastrar_aluno() :
                         idade INTEGER,
                         cpf TEXT UNIQUE NOT NULL,
                         id_professor INTEGER,
-                        FOREIGN KEY (id_professor) REFERENCES professor (id) 
+                        FOREIGN KEY (id_professor) REFERENCES professores (id) 
                         )''')
 
     # 3. INFORMAÇÕES DO ALUNO: Criando as variáveis com input 
@@ -67,7 +67,7 @@ def alterar_aluno ():
     
     else:
         novo_nome = input("Digite o nome: ")
-        novo_telefone = int(input("Digite o telefone : "))
+        novo_telefone =input("Digite o telefone : ")
         nova_idade = int(input("Digite a sua idade: "))
         nova_turma = input("Digite sua nova turma: ")
         novo_cpf = input("Digite o CPF: ")
@@ -78,8 +78,8 @@ def alterar_aluno ():
         telefone= '{novo_telefone}',
         idade= {nova_idade},
         turma= '{nova_turma}',
-        cpf= {novo_cpf},
-        id_professor = {id_professor_novo},
+        cpf= '{novo_cpf}',
+        id_professor = {id_professor_novo}
         WHERE id = {id_acesso}
         ''')
         
@@ -121,7 +121,6 @@ def menu():
         elif opcao == '4': excluir_aluno()
         elif opcao == '5' : break
         else: print("Opção inválida!")
-        return
         
 menu()
 

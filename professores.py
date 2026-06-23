@@ -67,8 +67,9 @@ def alterar_professores():
         novo_telefone = input("Digite o telefone : ")
         novo_endereco = input("Digite o novo endereço: ")
 
-        comando = (f''' UPDATE professores SET nome=  '{novo_nome}',telefone= '{novo_telefone}, Endereço = '{novo_endereco}'
+        comando = (f''' UPDATE professores SET nome=  '{novo_nome}',telefone= '{novo_telefone}', Endereco = '{novo_endereco}'
                     WHERE id = {id_acesso}''')
+        cursor.execute(comando)
         conexao.commit()
         print("Dados alterados com sucesso!")
         conexao.close()
