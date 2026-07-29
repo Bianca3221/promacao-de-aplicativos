@@ -12,4 +12,4 @@ def cadastrar_turma (nome, id_serie, id_prof) :
     finally:
         conexao.close()
 #Não tem o try para executar o except e nem o finally
-# o conexao.close() nã sera executado
+# o conexao.close() não sera executado
