@@ -26,6 +26,7 @@ def cadastrar_tabelas():
 
     except sqlite3.Error as erro:
         print("Erro ao criar o banco:", erro)
+        
 cadastrar_tabelas()
 
 
