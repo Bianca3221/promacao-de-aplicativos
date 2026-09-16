@@ -19,6 +19,3 @@ assert eh_par(10) == True
 
 print("Todos os testes passaram!")
     
-
-# Explicação: A função original estava errada porque verificava se o resto da divisão por 2 era 1. Para um número ser par,
-# o resto precisa ser 0. Por isso, a correção foi trocar == 1 por == 0.
